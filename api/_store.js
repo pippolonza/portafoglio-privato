@@ -46,16 +46,14 @@ async function readProfiles() {
   }
 
   if (!profiles.some((profile) => profile.id === PUBLIC_PROFILE_ID)) {
-    const publicProfile = {
+    profiles.unshift({
       id: PUBLIC_PROFILE_ID,
       name: "Pubblico",
       public: true,
       vault: { public: true, cards: [] },
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-    };
-    profiles.unshift(publicProfile);
-    await writeProfiles(profiles);
+    });
   }
 
   return profiles;
