@@ -1,0 +1,43 @@
+Portafoglio privato
+===================
+
+File da tenere
+--------------
+- `index.html`
+- `styles.css`
+- `app.js`
+- `server.js`
+- `api/`
+- `vercel.json`
+- `package.json`
+- `manifest.webmanifest`
+- `icon.svg`
+- `sw.js`
+
+Uso in locale
+-------------
+1. Fai doppio click su `APRI-PORTAFOGLIO.bat`.
+2. Aspetta che si apra il browser.
+3. Premi `Registrati`, crea il profilo, poi aggiungi le tessere.
+4. Se vuoi aprirlo a mano, il server parte con:
+   `node server.js`
+   e poi apri:
+   `http://127.0.0.1:4173/index.html`
+
+Uso online con GitHub + Vercel
+------------------------------
+1. Carica su GitHub solo i file di questa cartella.
+2. Collega il repository a Vercel.
+3. Su Vercel aggiungi Upstash Redis/KV.
+4. Imposta le variabili:
+   `KV_REST_API_URL`
+   `KV_REST_API_TOKEN`
+   oppure
+   `UPSTASH_REDIS_REST_URL`
+   `UPSTASH_REDIS_REST_TOKEN`
+5. Vercel usera le API in `api/` per salvare i profili.
+
+Cosa resta privato
+------------------
+I profili vengono salvati online, ma le tessere restano cifrate con la password.
+Chi non conosce la password non puo leggere il contenuto del portafoglio.

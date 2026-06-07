@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101820">
+  <title>Portafoglio privato</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section id="lock-view" class="view lock-view">
+      <div class="brand-mark" aria-hidden="true">
+        <span></span>
+      </div>
+      <h1>Portafoglio privato</h1>
+      <p class="muted">Carte, tessere e documenti cifrati per la famiglia.</p>
+
+      <section id="home-actions" class="home-actions">
+        <button id="show-login" class="primary" type="button" onclick="basicShowAccess()">Accedi</button>
+        <button id="show-register" type="button" onclick="basicShowRegister()">Registrati</button>
+      </section>
+
+      <section id="profiles-panel" class="panel profiles-panel hidden" aria-labelledby="profiles-title">
+        <button id="back-from-profiles" class="back-button" type="button" aria-label="Torna indietro" onclick="basicShowHome()">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          Indietro
+        </button>
+        <h2 id="profiles-title">Accedi</h2>
+        <p id="profiles-empty" class="hint hidden">Nessun profilo ancora. Torna indietro e registrati.</p>
+        <div id="profiles-list" class="profiles-list"></div>
+      </section>
+
+      <form id="unlock-form" class="panel hidden">
+        <button id="back-to-profiles" class="back-button" type="button" aria-label="Torna indietro" onclick="basicShowAccess()">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          Indietro
+        </button>
+        <div class="selected-profile">
+          <div class="profile-avatar" aria-hidden="true"></div>
+          <div>
+            <p class="eyebrow">Accesso profilo</p>
+            <h2 id="selected-profile-name"></h2>
+          </div>
+        </div>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" minlength="8" autocomplete="current-password" placeholder="Inserisci password" required>
+        <button class="primary" type="submit">
+          <span>Entra</span>
+        </button>
+      </form>
+
+      <form id="create-profile-form" class="panel hidden">
+        <button id="back-from-register" class="back-button" type="button" aria-label="Torna indietro" onclick="basicShowHome()">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          Indietro
+        </button>
+        <h2>Registrati</h2>
+        <label for="profile-name">Nome profilo</label>
+        <input id="profile-name" name="profile-name" type="text" autocomplete="name" placeholder="Giovanni, Casa, Viaggi..." required>
+        <label for="new-password">Password</label>
+        <input id="new-password" name="new-password" type="password" minlength="8" autocomplete="new-password" placeholder="Almeno 8 caratteri" required>
+        <button class="primary" type="submit">Registrati e apri</button>
+      </form>
+
+      <p id="lock-help" class="hint"></p>
+    </section>
+
+    <section id="wallet-view" class="view wallet-view hidden">
+      <header class="topbar">
+        <div>
+          <p id="active-profile-label" class="eyebrow">Portafoglio</p>
+          <h1>Le tue tessere</h1>
+        </div>
+        <button id="lock-button" class="icon-button" type="button" aria-label="Blocca">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10V8a6 6 0 1 1 12 0v2"/><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M12 15v3"/></svg>
+        </button>
+      </header>
+
+      <nav class="toolbar" aria-label="Azioni portafoglio">
+        <button id="add-card" class="primary" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          Aggiungi
+        </button>
+        <button id="export-data" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          Backup
+        </button>
+        <label class="file-button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9"/><path d="m7 14 5-5 5 5"/><path d="M5 3h14"/></svg>
+          Importa
+          <input id="import-data" type="file" accept="application/json">
+        </label>
+      </nav>
+
+      <div class="search-row">
+        <input id="search" type="search" placeholder="Cerca tessera" autocomplete="off">
+      </div>
+
+      <div id="empty-state" class="empty-state">
+        <div class="card-fan" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <h2>Portafoglio aperto</h2>
+        <p>Aggiungi la prima tessera. Foto e codici restano cifrati sul tuo telefono.</p>
+      </div>
+
+      <section id="cards-list" class="cards-list" aria-live="polite"></section>
+    </section>
+  </main>
+
+  <dialog id="card-dialog">
+    <form id="card-form" method="dialog" class="dialog-panel">
+      <div class="dialog-head">
+        <h2 id="dialog-title">Nuova tessera</h2>
+        <button id="close-card-form" class="icon-button" type="button" aria-label="Chiudi">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <input id="card-id" type="hidden">
+      <label>Nome tessera
+        <input id="card-name" type="text" placeholder="Farmacia, Coop, Palestra..." required>
+      </label>
+      <label>Categoria
+        <select id="card-type">
+          <option>Negozio</option>
+          <option>Salute</option>
+          <option>Trasporti</option>
+          <option>Documento</option>
+          <option>Altro</option>
+        </select>
+      </label>
+      <label>Numero o codice
+        <input id="card-code" type="text" inputmode="text" placeholder="Codice a barre, numero tessera...">
+      </label>
+      <label>Note private
+        <textarea id="card-notes" rows="3" placeholder="Scadenza, dettagli utili..."></textarea>
+      </label>
+      <div class="image-grid">
+        <label class="image-input">Foto fronte
+          <input id="front-image" type="file" accept="image/*">
+          <span id="front-label">Scegli immagine</span>
+        </label>
+        <label class="image-input">Foto retro
+          <input id="back-image" type="file" accept="image/*">
+          <span id="back-label">Scegli immagine</span>
+        </label>
+      </div>
+      <div class="dialog-actions">
+        <button id="delete-card" class="danger hidden" type="button">Elimina</button>
+        <button class="primary" value="save" type="submit">Salva</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="view-dialog">
+    <article class="dialog-panel viewer">
+      <div class="dialog-head">
+        <div>
+          <p id="viewer-type" class="eyebrow"></p>
+          <h2 id="viewer-name"></h2>
+        </div>
+        <button id="close-viewer" class="icon-button" type="button" aria-label="Chiudi">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div id="viewer-code" class="code-block hidden"></div>
+      <div id="viewer-images" class="viewer-images"></div>
+      <p id="viewer-notes" class="notes"></p>
+      <button id="edit-current" class="primary" type="button">Modifica</button>
+    </article>
+  </dialog>
+
+  <script>
+    function basicHideEntryPanels() {
+      document.getElementById("home-actions").classList.add("hidden");
+      document.getElementById("profiles-panel").classList.add("hidden");
+      document.getElementById("unlock-form").classList.add("hidden");
+      document.getElementById("create-profile-form").classList.add("hidden");
+    }
+
+    function basicSetHelp(message) {
+      const help = document.getElementById("lock-help");
+      if (help) help.textContent = message;
+    }
+
+    function basicShowHome() {
+      basicHideEntryPanels();
+      document.getElementById("home-actions").classList.remove("hidden");
+      basicSetHelp("Scegli Accedi se hai gia un profilo, oppure Registrati per crearne uno.");
+    }
+
+    function basicShowAccess() {
+      basicHideEntryPanels();
+      document.getElementById("profiles-panel").classList.remove("hidden");
+      basicSetHelp("Scegli un profilo esistente.");
+    }
+
+    function basicShowRegister() {
+      basicHideEntryPanels();
+      document.getElementById("create-profile-form").classList.remove("hidden");
+      basicSetHelp("Inserisci nome e password per creare un profilo nel programma.");
+    }
+  </script>
+  <script src="app.js?v=8"></script>
+</body>
+</html>
