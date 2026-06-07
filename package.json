@@ -1,10 +1,6 @@
 {
-  "main": "index.js",
-  "scripts": {
-    "start": "node local-server.cjs"
-  },
-  "dependencies": {
-    "@upstash/redis": "latest"
-  },
-  "devDependencies": {}
+  "name": "portafoglio-privato",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js"
 }

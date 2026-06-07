@@ -1,4 +1,22 @@
 {
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.js"
+    }
+  ],
+  "functions": {
+    "index.js": {
+      "includeFiles": [
+        "index.html",
+        "client.js",
+        "styles.css",
+        "icon.svg",
+        "manifest.webmanifest",
+        "sw.js"
+      ]
+    }
+  },
   "headers": [
     {
       "source": "/(.*)",

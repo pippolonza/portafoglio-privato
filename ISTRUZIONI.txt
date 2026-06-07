@@ -4,7 +4,6 @@ Portafoglio privato
 File da tenere
 --------------
 - `index.html`
-- `index.js`
 - `styles.css`
 - `client.js`
 - `local-server.cjs`
@@ -28,6 +27,7 @@ Uso in locale
 Uso online con GitHub + Vercel
 ------------------------------
 1. Carica su GitHub i file di questa cartella, ma non caricare `data/`.
+   Non caricare `index.js`: non serve piu e fa rompere Vercel.
 2. Collega il repository a Vercel.
 3. Su Vercel aggiungi Upstash Redis/KV.
 4. Imposta le variabili:
