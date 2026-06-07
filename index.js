@@ -59,7 +59,9 @@ module.exports = async function handler(request, response) {
 };
 
 async function serveStatic(pathname, response) {
-  const requested = pathname === "/" ? "/index.html" : pathname;
+  const requested = ["/", "/index", "/index.html", "/index.js"].includes(pathname)
+    ? "/index.html"
+    : pathname;
   const cleanPath = decodeURIComponent(requested).replace(/^\/+/, "");
   const normalized = path.normalize(cleanPath);
   const filePath = path.join(ROOT, normalized);
