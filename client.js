@@ -192,7 +192,13 @@ async function selectProfile(profileId) {
   $("selected-profile-name").textContent = profile.name;
   hideEntryPanels();
   if (profile.public) {
-    await openPublicProfile(profile);
+    try {
+      const fullProfile = await api(`/api/profiles/${profile.id}`);
+      await openPublicProfile(fullProfile);
+    } catch (error) {
+      setHelp(error.message === "SERVER_OFFLINE" ? "Il server non e raggiungibile." : "Non riesco ad aprire lo spazio Famiglia.", true);
+      showAccess();
+    }
     return;
   }
   unlockForm.classList.remove("hidden");
@@ -277,6 +283,7 @@ async function lock() {
 }
 
 async function openPublicProfile(profile) {
+  state.activeProfileId = profile.id;
   state.activeProfile = profile;
   state.key = null;
   state.cards = profile.vault?.cards || [];
@@ -406,19 +413,33 @@ async function saveCard(event) {
 
   if (!card.name) return;
 
+  const previousCards = [...state.cards];
   const existing = state.cards.findIndex((item) => item.id === id);
   if (existing >= 0) state.cards[existing] = card;
   else state.cards.push(card);
 
-  await persist();
+  try {
+    await persist();
+  } catch (error) {
+    state.cards = previousCards;
+    alert(error.message || "Non sono riuscito a salvare la tessera.");
+    return;
+  }
   cardDialog.close();
   renderCards();
 }
 
 async function deleteCurrentCard() {
   if (!state.currentId) return;
+  const previousCards = [...state.cards];
   state.cards = state.cards.filter((card) => card.id !== state.currentId);
-  await persist();
+  try {
+    await persist();
+  } catch (error) {
+    state.cards = previousCards;
+    alert(error.message || "Non sono riuscito a eliminare la tessera.");
+    return;
+  }
   cardDialog.close();
   renderCards();
 }
