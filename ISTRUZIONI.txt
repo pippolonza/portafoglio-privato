@@ -5,8 +5,8 @@ File da tenere
 --------------
 - `index.html`
 - `styles.css`
-- `app.js`
-- `server.js`
+- `client.js`
+- `local-server.cjs`
 - `api/`
 - `vercel.json`
 - `package.json`
@@ -20,13 +20,13 @@ Uso in locale
 2. Aspetta che si apra il browser.
 3. Premi `Registrati`, crea il profilo, poi aggiungi le tessere.
 4. Se vuoi aprirlo a mano, il server parte con:
-   `node server.js`
+   `node local-server.cjs`
    e poi apri:
    `http://127.0.0.1:4173/index.html`
 
 Uso online con GitHub + Vercel
 ------------------------------
-1. Carica su GitHub solo i file di questa cartella.
+1. Carica su GitHub i file di questa cartella, ma non caricare `data/`.
 2. Collega il repository a Vercel.
 3. Su Vercel aggiungi Upstash Redis/KV.
 4. Imposta le variabili:

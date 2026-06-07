@@ -2,13 +2,20 @@ const fs = require("node:fs/promises");
 const path = require("node:path");
 
 const KEY = "portafoglio-privato:profiles";
-const DATA_FILE = path.join(process.cwd(), "data", "profiles.json");
+const DATA_FILE = process.env.DATA_FILE
+  ? path.resolve(process.env.DATA_FILE)
+  : path.join(process.cwd(), "data", "profiles.json");
 const PUBLIC_PROFILE_ID = "public";
 
 function redisConfig() {
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
   return { url, token };
+}
+
+function hasRedisConfig() {
+  const { url, token } = redisConfig();
+  return Boolean(url && token);
 }
 
 async function redisCommand(command) {
@@ -62,6 +69,10 @@ async function readProfiles() {
 async function writeProfiles(profiles) {
   const written = await redisCommand(["SET", KEY, JSON.stringify(profiles)]);
   if (written !== null) return;
+
+  if (process.env.VERCEL && !hasRedisConfig()) {
+    throw new Error("Storage online non configurato: aggiungi Upstash Redis/KV su Vercel.");
+  }
 
   await fs.mkdir(path.dirname(DATA_FILE), { recursive: true });
   await fs.writeFile(DATA_FILE, JSON.stringify(profiles, null, 2));
