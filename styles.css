@@ -55,37 +55,13 @@ button, .file-button {
 
 .back-button {
   display: inline-flex;
-  gap: 0;
+  gap: 4px;
   align-items: center;
   min-height: 34px;
-  overflow: hidden;
-}
-
-.back-button svg {
-  transition: transform .22s ease;
-}
-
-.back-button:hover svg,
-.back-button:focus-visible svg {
-  transform: translateX(-3px);
 }
 
 .back-label {
   display: inline-block;
-  max-width: 0;
-  opacity: 0;
-  transform: translateX(-6px);
-  white-space: nowrap;
-  overflow: hidden;
-  transition: max-width .24s ease, opacity .18s ease, transform .24s ease, margin-left .24s ease;
-}
-
-.back-button:hover .back-label,
-.back-button:focus-visible .back-label {
-  max-width: 90px;
-  margin-left: 6px;
-  opacity: 1;
-  transform: translateX(0);
 }
 
 button svg, .file-button svg {
@@ -120,6 +96,50 @@ button svg, .file-button svg {
   width: 44px;
   padding: 0;
   flex: 0 0 auto;
+}
+
+.lock-button {
+  width: 44px;
+  min-width: 44px;
+  padding: 0;
+  overflow: hidden;
+  justify-self: end;
+  transition: width .24s ease, padding .24s ease, border-color .2s ease;
+}
+
+.lock-button svg {
+  flex: 0 0 auto;
+  transition: transform .22s ease;
+}
+
+.lock-label {
+  display: inline-block;
+  max-width: 0;
+  opacity: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  transform: translateX(-6px);
+  transition: max-width .24s ease, opacity .18s ease, transform .24s ease, margin-left .24s ease;
+}
+
+.lock-button:hover,
+.lock-button:focus-visible {
+  width: 164px;
+  padding: 0 12px;
+  border-color: var(--accent);
+}
+
+.lock-button:hover svg,
+.lock-button:focus-visible svg {
+  transform: translateX(-2px) rotate(-6deg);
+}
+
+.lock-button:hover .lock-label,
+.lock-button:focus-visible .lock-label {
+  max-width: 120px;
+  margin-left: 6px;
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .app-shell {
