@@ -365,15 +365,17 @@ function renderCards() {
     button.className = "wallet-card";
     button.type = "button";
     button.addEventListener("click", () => openViewer(card.id));
+    const notesPreview = card.notes ? escapeHtml(card.notes) : "";
     button.innerHTML = `
-      <div>
+      ${card.frontImage ? `<img class="thumb" alt="" src="${card.frontImage}">` : '<div class="thumb thumb-placeholder" aria-hidden="true"></div>'}
+      <div class="card-summary">
         <h2>${escapeHtml(card.name)}</h2>
         <div class="card-meta">
           <span class="chip">${escapeHtml(card.type)}</span>
-          ${card.code ? `<span>${escapeHtml(maskCode(card.code))}</span>` : ""}
+          ${card.code ? `<span class="card-code">${escapeHtml(card.code)}</span>` : ""}
         </div>
+        ${notesPreview ? `<p class="card-notes-preview">${notesPreview}</p>` : ""}
       </div>
-      ${card.frontImage ? `<img class="thumb" alt="" src="${card.frontImage}">` : ""}
     `;
     cardsList.append(button);
   }
