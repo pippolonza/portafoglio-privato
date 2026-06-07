@@ -55,7 +55,7 @@ async function readProfiles() {
   if (!profiles.some((profile) => profile.id === PUBLIC_PROFILE_ID)) {
     profiles.unshift({
       id: PUBLIC_PROFILE_ID,
-      name: "Pubblico",
+      name: "Famiglia",
       public: true,
       vault: { public: true, cards: [] },
       createdAt: new Date().toISOString(),

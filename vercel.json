@@ -7,7 +7,7 @@
   ],
   "functions": {
     "index.js": {
-      "includeFiles": "{index.html,client.js,styles.css,icon.svg,manifest.webmanifest,sw.js}"
+      "includeFiles": "{index.html,client.js,styles.css,icon.svg,favicon.png,manifest.webmanifest,sw.js}"
     }
   },
   "headers": [

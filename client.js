@@ -114,7 +114,7 @@ async function loadProfiles(options = {}) {
       await api("/api/profiles", {
         method: "POST",
         body: JSON.stringify({
-          name: "Pubblico",
+          name: "Famiglia",
           public: true,
           vault: { public: true, cards: [] },
         }),
@@ -142,7 +142,10 @@ function renderProfiles() {
     if (profile.public) button.dataset.public = "true";
     button.innerHTML = `
       <span class="profile-avatar" aria-hidden="true"></span>
-      <span>${escapeHtml(profile.name)}${profile.public ? '<span class="profile-note">senza password</span>' : ""}</span>
+      <span class="profile-label">
+        <span class="profile-name">${escapeHtml(profile.public ? "Famiglia" : profile.name)}</span>
+        ${profile.public ? '<span class="profile-note">senza password</span>' : ""}
+      </span>
     `;
     button.addEventListener("click", () => selectProfile(profile.id));
     profilesList.append(button);

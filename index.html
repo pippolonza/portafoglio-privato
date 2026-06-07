@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#101820">
   <title>Portafoglio privato</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="favicon.png">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -25,7 +27,7 @@
       <section id="profiles-panel" class="panel profiles-panel hidden" aria-labelledby="profiles-title">
         <button id="back-from-profiles" class="back-button" type="button" aria-label="Torna indietro" onclick="basicShowHome()">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-          Indietro
+          <span class="back-label">Indietro</span>
         </button>
         <h2 id="profiles-title">Accedi</h2>
         <p id="profiles-empty" class="hint hidden">Nessun profilo ancora. Torna indietro e registrati.</p>
@@ -35,7 +37,7 @@
       <form id="unlock-form" class="panel hidden">
         <button id="back-to-profiles" class="back-button" type="button" aria-label="Torna indietro" onclick="basicShowAccess()">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-          Indietro
+          <span class="back-label">Indietro</span>
         </button>
         <div class="selected-profile">
           <div class="profile-avatar" aria-hidden="true"></div>
@@ -54,7 +56,7 @@
       <form id="create-profile-form" class="panel hidden">
         <button id="back-from-register" class="back-button" type="button" aria-label="Torna indietro" onclick="basicShowHome()">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-          Indietro
+          <span class="back-label">Indietro</span>
         </button>
         <h2>Registrati</h2>
         <label for="profile-name">Nome profilo</label>
@@ -204,6 +206,6 @@
       basicSetHelp("Inserisci nome e password per creare un profilo nel programma.");
     }
   </script>
-  <script src="client.js?v=9"></script>
+  <script src="client.js?v=10"></script>
 </body>
 </html>

@@ -55,8 +55,37 @@ button, .file-button {
 
 .back-button {
   display: inline-flex;
-  gap: 4px;
+  gap: 0;
   align-items: center;
+  min-height: 34px;
+  overflow: hidden;
+}
+
+.back-button svg {
+  transition: transform .22s ease;
+}
+
+.back-button:hover svg,
+.back-button:focus-visible svg {
+  transform: translateX(-3px);
+}
+
+.back-label {
+  display: inline-block;
+  max-width: 0;
+  opacity: 0;
+  transform: translateX(-6px);
+  white-space: nowrap;
+  overflow: hidden;
+  transition: max-width .24s ease, opacity .18s ease, transform .24s ease, margin-left .24s ease;
+}
+
+.back-button:hover .back-label,
+.back-button:focus-visible .back-label {
+  max-width: 90px;
+  margin-left: 6px;
+  opacity: 1;
+  transform: translateX(0);
 }
 
 button svg, .file-button svg {
@@ -180,12 +209,12 @@ h1, h2, p { margin: 0; }
 }
 
 .profile-button {
-  min-height: 112px;
+  min-height: 128px;
   padding: 12px;
   display: grid;
   justify-items: center;
   align-content: center;
-  gap: 10px;
+  gap: 12px;
   text-align: center;
   overflow-wrap: anywhere;
 }
@@ -204,11 +233,30 @@ h1, h2, p { margin: 0; }
 
 .profile-note {
   display: inline-block;
-  margin-top: 4px;
+  width: fit-content;
+  margin: 7px auto 0;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgba(242, 193, 78, .28);
   font-size: .72rem;
+  line-height: 1.1;
   color: #8a6500;
   font-weight: 800;
   text-transform: uppercase;
+}
+
+.profile-label {
+  display: grid;
+  justify-items: center;
+  gap: 0;
+  max-width: 100%;
+}
+
+.profile-name {
+  display: block;
+  max-width: 100%;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
 }
 
 .profile-avatar {

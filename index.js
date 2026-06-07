@@ -11,6 +11,7 @@ const STATIC_FILES = new Set([
   "client.js",
   "styles.css",
   "icon.svg",
+  "favicon.png",
   "manifest.webmanifest",
   "sw.js",
 ]);
@@ -21,6 +22,7 @@ const mime = {
   ".js": "text/javascript; charset=utf-8",
   ".webmanifest": "application/manifest+json; charset=utf-8",
   ".svg": "image/svg+xml",
+  ".png": "image/png",
 };
 
 module.exports = async function handler(request, response) {
