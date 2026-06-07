@@ -4,6 +4,7 @@ Portafoglio privato
 File da tenere
 --------------
 - `index.html`
+- `index.js`
 - `styles.css`
 - `client.js`
 - `local-server.cjs`
