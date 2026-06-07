@@ -124,7 +124,7 @@ button svg, .file-button svg {
 
 .lock-button:hover,
 .lock-button:focus-visible {
-  width: 164px;
+  width: 188px;
   padding: 0 12px;
   border-color: var(--accent);
 }
@@ -136,7 +136,7 @@ button svg, .file-button svg {
 
 .lock-button:hover .lock-label,
 .lock-button:focus-visible .lock-label {
-  max-width: 120px;
+  max-width: 150px;
   margin-left: 6px;
   opacity: 1;
   transform: translateX(0);
